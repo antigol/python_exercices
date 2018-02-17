@@ -35,6 +35,11 @@ x[0].append(42)
 
 print(x)
 
+x = [[]] * 5
+x[0] = 42
+
+print(x)
+
 x = [[] for _ in range(5)]
 x[0].append(42)
 
