@@ -51,3 +51,32 @@ x['world'] = x['hello']
 x['hello'] = [1, 2, 3, 4]
 
 print(x)
+
+
+def foo1(x):
+    x += " world!"
+x = "hello"
+foo1(x)
+print(x)
+
+
+def foo2(x):
+    x += [42]
+x = []
+foo2(x)
+print(x)
+
+
+def foo3(x):
+    x = sorted(x)
+x = [3, 2, 1]
+foo3(x)
+print(x)
+
+
+def foo4(x):
+    x[:2] = [42, 42]
+x = [0, 0, 0]
+foo4(x)
+print(x)
+
