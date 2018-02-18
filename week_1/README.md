@@ -4,6 +4,10 @@
 
 Predict the outcome of `var.py`
 
+## List Comprehensions
+
+Complete the code of `list.py`
+
 ## Objects
 
 Complete the code of `object.py`
