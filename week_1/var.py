@@ -86,3 +86,11 @@ x = [0, 0, 0]
 foo4(x)
 print(x)
 
+
+try:
+    x = ([1, 2, 3], 42)
+    x[0][:] = []
+    x[1] += 10
+    print(x)
+except Exception as e:
+    print(e)
