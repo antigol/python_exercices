@@ -8,6 +8,10 @@ Predict the outcome of `var.py`
 
 Complete the code of `list.py`
 
+## Using Built-ins
+
+Simplify the functions from `simplify.py` using python built-ins
+
 ## Objects
 
 Complete the code of `object.py`
