@@ -7,6 +7,7 @@ Complete `decorators.py` with a decorator function
 ## Library
 
 Create a python library called `spam` such that `library.py` executes correctly
+There is an example of library in directory `libraray_example`
 
 ## Numpy
 
