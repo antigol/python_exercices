@@ -8,16 +8,8 @@ Complete `decorators.py` with a decorator function
 
 Create a python library called `spam` such that `library.py` executes correctly
 
-## Pytorch
+## Numpy
 
-Give a look at the following links:
-- [http://pytorch.org/](http://pytorch.org/)
-- [http://pytorch.org/docs/0.3.1/](http://pytorch.org/docs/0.3.1/)
-- [http://pytorch.org/tutorials/](http://pytorch.org/tutorials/)
-
-## autograd
-
-Let M be a n by n matrix
-Compute the derivative of det(M) with respect to each componant of M
-
-
+- Complete the functions in `alg.py`
+- Observe the central limit theorem affirmation with histograms, `clt.py` contains an example how to plot an histogram
+- Implement the gradient descent https://en.wikipedia.org/wiki/Gradient_descent in `grad.py`
