@@ -7,9 +7,12 @@ Give a look at the following links:
 
 ## autograd
 
-Let M be a n by n matrix
-Compute the derivative of det(M) with respect to each componant of M
+The following exercise shows the power of `torch.autograd` to compute derivatives of complicated expressions.
+It can compute the derivative of expressions even if the expression has been defined using for loops and recursive functions.
 
+Let `M` be a `n` by `n` matrix
+Compute the derivative of `det(M)` with respect to each componant of `M`
+Complete the file `autograd.py`
 
 ## MNIST
 
