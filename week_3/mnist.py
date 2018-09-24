@@ -3,20 +3,18 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
-from torchvision import datasets, transforms
-from torch.autograd import Variable
+import torchvision
 import matplotlib.pyplot as plt
 
 # check if we can use a GPU
-cuda = torch.cuda.is_available()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Download the MNIST dataset
-transform = transforms.Compose([
-    transforms.ToTensor(),  # Convert each image into a torch.FloatTensor
-    transforms.Normalize((0.1307,), (0.3081,))  # Normalize the data to have zero mean and 1 stdv
+transform = torchvision.transforms.Compose([
+    torchvision.transforms.ToTensor(),  # Convert each image into a torch.FloatTensor
+    torchvision.transforms.Normalize((0.1307,), (0.3081,))  # Normalize the data to have zero mean and 1 stdv
 ])
-train_set = datasets.MNIST('data', train=True, download=True, transform=transform)
+train_set = torchvision.datasets.MNIST('mnist_data', train=True, download=True, transform=transform)
 
 # train_set[i] with i from 0 to len(train_set) - 1
 # returns a tuple (image of a digit, integer on the image)
@@ -40,25 +38,19 @@ class Net(nn.Module):
 
 
 # Initialize the model
-model = Net()
+model = Net().to(device)
 
-# If possible, upload the model's paramters to the GPU
-if cuda:
-    model.cuda()
-
-optimizer = optim.SGD(model.parameters(), lr=0.01)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
 # A loader is an object that will split the dataset into batches
 # We choose to create randomly (shuffle=True) batches of size 64 (batch_size=64)
 loader = torch.utils.data.DataLoader(train_set, batch_size=64, shuffle=True)
+
 # Thanks to loader to implement the magic function __iter__ we can iterate through the batches with a simple for loop
 for data, target in loader:
     # data contains the digit images as a FloatTensor of shape (64, 1, 28, 28)
     # target contains the true class of the repsective images, it is a LongTensor of shape (64,)
-    if cuda:
-        data, target = data.cuda(), target.cuda()
-
-    data, target = Variable(data), Variable(target)
+    data, target = data.to(device), target.to(device)
 
     output = model(data)
     loss = F.cross_entropy(output, target)
@@ -75,20 +67,17 @@ for data, target in loader:
 # The following code tests it the model can read the digits on images from the test dataset
 # The test dataset has not be used to train the network
 
-test_set = datasets.MNIST('data', train=False, transform=transform)
+test_set = torchvision.datasets.MNIST('data', train=False, transform=transform)
 
 test_loss = 0
 correct = 0
 
-loader = torch.utils.data.DataLoader(test_set, batch_size=64)
-for data, target in loader:
-    if cuda:
-        data, target = data.cuda(), target.cuda()
-    data, target = Variable(data, volatile=True), Variable(target)
+for data, target in torch.utils.data.DataLoader(test_set, batch_size=64):
+    data, target = data.to(device), target.to(device)
     output = model(data)
-    test_loss += F.cross_entropy(output, target, size_average=False).data[0]  # sum up batch loss
-    pred = output.data.max(1, keepdim=True)[1]  # get the index of the max log-probability
-    correct += pred.eq(target.data.view_as(pred)).cpu().sum()
+    test_loss += F.cross_entropy(output, target, size_average=False).item()  # sum up batch loss
+    pred = output.argmax(1)  # get the index of the max log-probability
+    correct += pred.eq(target).sum().item()
 
 test_loss /= len(test_set)
 
