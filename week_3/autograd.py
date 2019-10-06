@@ -1,6 +1,5 @@
 #pylint: disable=E1101
 import torch
-from torch.autograd import Variable
 
 
 def det(x):
